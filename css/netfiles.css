@@ -1,0 +1,44 @@
+body {
+    font-family: 'Segoe UI';
+    margin: 5px;
+    padding: 0;
+}
+
+table tr td,
+table thead th {
+    border: none;
+    font-size: 15px;
+    padding: 3px 3px;
+    width: 100%;
+    vertical-align: middle;
+    text-align: left;
+}
+
+table img {
+    padding: 0;
+    margin: 0;
+    position: relative;
+    top: 3px;
+    width: 16px;
+    height: 16px;    
+}
+
+table img.thumbnail {
+    width: 100px;
+    height: 60px;
+    margin-right: 10px;
+}
+
+table tr td:hover,
+table thead th:hover {
+    background: #fafafa
+}
+
+table tbody tr:nth-child(even),
+table thead th:nth-child(even)  {
+    background: #fafafa;
+}
+
+table tbody tr:nth-child(even) > td:hover{
+    background: #f0f0f0;
+}
