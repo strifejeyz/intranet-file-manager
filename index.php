@@ -14,7 +14,7 @@
     <thead class="thead">
         <th>Filename</th>
         <th>Type</th>
-        <th>Size</th>
+        <th style="width: 100px;">Size</th>
         <th>Manage</th>
     </thead>
     <tbody class="tbody">

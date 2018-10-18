@@ -1,5 +1,5 @@
 body {
-    font-family: 'Segoe UI';
+    font-family: 'Segoe UI Light', 'sans-serif';
     margin: 5px;
     padding: 0;
 }
@@ -10,8 +10,14 @@ table thead th {
     font-size: 15px;
     padding: 3px 3px;
     width: 100%;
+    min-width: 100px;
     vertical-align: middle;
     text-align: left;
+}
+
+table tr td a {
+    text-decoration: none;
+    color: #3f3f3f;
 }
 
 table img {
@@ -41,4 +47,16 @@ table thead th:nth-child(even)  {
 
 table tbody tr:nth-child(even) > td:hover{
     background: #f0f0f0;
+}
+
+td.download {
+    padding: 0;
+    margin: 0;
+}
+td.download-button a {
+    background: #9400e6;
+    margin: 3px;
+    padding: 5px;
+    font-size: 11px;
+    color: #ffffff;
 }

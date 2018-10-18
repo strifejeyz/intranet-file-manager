@@ -37,7 +37,14 @@ var $ = {
     
     create: (elementName) => {
 		return document.createElement(elementName);
-    },
+	},
+	
+	convertBytes: function (bytes) {
+		var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+		if (bytes == 0) return '0 Byte';
+		var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+		return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+	}
 }
 
 
@@ -48,7 +55,7 @@ var listAllFiles = (json) => {
 	const data = JSON.parse(json);
 		
 	//reset any value before pushing a new one.
-		tbody.innerHTML = "<tr><td class='prev_dir_button'>..</td><td></td><td></td><td></td></tr>";
+		tbody.innerHTML = "<tr><td class='prev_dir_button'><img class='prev_dir_button' src='img/back.png' width=20 height=30></td><td></td><td></td><td></td></tr>";
 
 	//save the current dir so we knew where to comeback
 	$.q('body').setAttribute('data-prev-dir', data['default_path']);
@@ -72,23 +79,32 @@ var listAllFiles = (json) => {
 	}
 	
 	if (data['files']['names'] != undefined) {
-		var img = "<img src='img/file.png' width=20 height=20>";
+		var type = "<img src='img/file.png' width=20 height=20>";
 
 		for (let f = 0; f < data['files']['names'].length; f++) {
+			var filepath = data['files']['paths'][f];
+			filepath.replace('./', '');
+
 			if (data['files']['types'][f] == 'png' || data['files']['types'][f] == 'jpg' || data['files']['types'][f] == 'jpeg') {
-				img = "<img class='thumbnail' src='" + data['files']['paths'][f] + "' width=100 height=70>";
-			}
+				type = "<img class='thumbnail' src='" + filepath + "' width=100 height=70>";
+			} 
 
 			const rows = $.create('tr');
-				// for filenames,size,types
-				rows.innerHTML = "<td>"+ img + data['files']['names'][f] + "</td>";
-				rows.innerHTML += "<td>" + data['files']['types'][f] + "</td>";
-				rows.innerHTML += "<td>" + data['files']['sizes'][f] + "</td>";
-				rows.innerHTML += "<td><a href='"+ data['files']['paths'][f] +"'>Download</a></td>";
-	
-				// Set absolute path to its attribute
-				rows.setAttribute('data-path', data['files']['paths'][f]);
-				tbody.appendChild(rows);
+			// for filenames,size,types
+			if (data['files']['types'][f] == 'mp3' || data['files']['types'][f] == 'm4a' || data['files']['types'][f] == 'wma') {
+				type = "<img src='img/music.png' width=20 height=20> ";
+				rows.innerHTML = "<td>"+type+"<a target='__blank' href='" + filepath +"'>"+data['files']['names'][f]+"</a></td>";
+			} else {
+				rows.innerHTML = "<td>"+ type + data['files']['names'][f] + "</td>";
+			}
+
+			rows.innerHTML += "<td>" + data['files']['types'][f] + "</td>";
+			rows.innerHTML += "<td>" + $.convertBytes(data['files']['sizes'][f]) + "</td>";
+			rows.innerHTML += "<td class='download-button'><a href='"+ data['files']['paths'][f] +"'>Download</a></td>";
+
+			// Set absolute path to its attribute
+			rows.setAttribute('data-path', data['files']['paths'][f]);
+			tbody.appendChild(rows);
 		}
 	}
 	
