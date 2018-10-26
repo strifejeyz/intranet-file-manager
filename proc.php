@@ -6,7 +6,7 @@ if (isset($_POST['path'])) {
     $defaultPath = urldecode($_POST['path']);
     $defaultPath = str_replace('\\', '/', $defaultPath);
 } else {
-    $defaultPath = './Strife';
+    $defaultPath = './your-local-path';
 }
 
 $_SESSION['previous_path'] = $defaultPath;
